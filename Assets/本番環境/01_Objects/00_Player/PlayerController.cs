@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
     private System.Action[] KickAction;
     private bool IsJump = false;
     private Vector2 KickDirection;
-    private Quaternion LegRotation = Quaternion.identity;
     private float KickTimeCount = 0.0f;
     //private float KickExecCoolTimeCount = 0.0f;
 
@@ -107,12 +106,12 @@ public class PlayerController : MonoBehaviour
             {
                 KickState = KickStateId.Kick;
 
-                Leg.gameObject.SetActive(true);
                 KickTimeCount = 0.0f;
                 KickDirection = normal;
-                //float angle = Vector2.Angle(Vector2.down, normal) * (horizontal >= 0 ? 1 : -1);
-                LegRotation = Quaternion.FromToRotation(Vector3.down, KickDirection);
-                Leg.rotation = LegRotation;
+
+                Leg.position = transform.position;
+                Leg.rotation = Quaternion.FromToRotation(Vector3.down, KickDirection);
+                Leg.gameObject.SetActive(true);
             }
         }
     }
@@ -149,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
             IsJump = false;
             Leg.gameObject.SetActive(false);
-            Leg.localPosition = Vector3.zero;
+            Leg.position = transform.position;
         }
     }
 
@@ -181,8 +180,6 @@ public class PlayerController : MonoBehaviour
             }
 
             Rb.velocity = resultVel;
-            //Rb.AddForce(jumpVel, ForceMode2D.Impulse);
-
             Rb.angularVelocity = Rb.velocity.x * -KickAngularPower;
 
             AudioManager.Instance.PlaySe("ƒWƒƒƒ“ƒv");
