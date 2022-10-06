@@ -108,11 +108,11 @@ public class PlayerController : MonoBehaviour
                 KickState = KickStateId.Kick;
 
                 Leg.gameObject.SetActive(true);
-                Leg.rotation = LegRotation;
                 KickTimeCount = 0.0f;
                 KickDirection = normal;
                 //float angle = Vector2.Angle(Vector2.down, normal) * (horizontal >= 0 ? 1 : -1);
                 LegRotation = Quaternion.FromToRotation(Vector3.down, KickDirection);
+                Leg.rotation = LegRotation;
             }
         }
     }
